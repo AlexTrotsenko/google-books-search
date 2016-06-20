@@ -2,6 +2,7 @@ package com.alextrotsenko.booksearch.rest.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,12 +23,22 @@ public class BooksInfo {
         return eBooks;
     }
 
-    public static class EBookInfo {
+    public static class EBookInfo implements Serializable {
+        private static final long serialVersionUID = -3487430389725168240L;
+
         @SerializedName(DtoSchema.EBook.ID)
         String id;
 
         @SerializedName(DtoSchema.EBook.BOOK_INFO)
         BookInfo bookInfo;
+
+        public String getId() {
+            return id;
+        }
+
+        public BookInfo getBookInfo() {
+            return bookInfo;
+        }
 
         @Override
         public String toString() {
