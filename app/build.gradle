@@ -53,4 +53,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'
 
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+
+    compile 'com.google.dagger:dagger:2.5'
+    apt "com.google.dagger:dagger-compiler:2.5"
 }
