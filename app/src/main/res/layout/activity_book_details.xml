@@ -3,7 +3,7 @@
 
     <!--TODO:Use DeatiledBookViewModel-->
     <data>
-        <variable name="viewModel" type="com.alextrotsenko.booksearch.ui.BookAdapter.BookViewModel"/>
+        <variable name="viewModel" type="com.alextrotsenko.booksearch.viewmodel.DetailedBookViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -36,12 +36,14 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/activity_horizontal_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="com.alextrotsenko.booksearch.BookDetailsActivity"
             tools:showIn="@layout/activity_book_details">
 
             <RelativeLayout
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -72,8 +74,10 @@
                     android:id="@+id/book_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:layout_marginBottom="@dimen/text_margin"
                     android:layout_below="@id/book_front_cover"
-                    android:text="@string/large_text"/>
+                    android:text="@{viewModel.description}"/>
 
             </RelativeLayout>
 

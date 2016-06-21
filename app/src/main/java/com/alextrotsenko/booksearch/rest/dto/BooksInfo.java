@@ -2,7 +2,6 @@ package com.alextrotsenko.booksearch.rest.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,40 +12,14 @@ public class BooksInfo {
     Integer matchingBooksCount;
 
     @SerializedName(DtoSchema.Books.EBOOKS_LIST)
-    List<EBookInfo> eBooks;
+    List<ShortEBookInfo> eBooks;
 
     public Integer getMatchingBooksCount() {
         return matchingBooksCount;
     }
 
-    public List<EBookInfo> getEBooks() {
+    public List<? extends EBookInfo> getEBooks() {
         return eBooks;
-    }
-
-    public static class EBookInfo implements Serializable {
-        private static final long serialVersionUID = -3487430389725168240L;
-
-        @SerializedName(DtoSchema.EBook.ID)
-        String id;
-
-        @SerializedName(DtoSchema.EBook.BOOK_INFO)
-        BookInfo bookInfo;
-
-        public String getId() {
-            return id;
-        }
-
-        public BookInfo getBookInfo() {
-            return bookInfo;
-        }
-
-        @Override
-        public String toString() {
-            return "EBookInfo{" +
-                    "id='" + id + '\'' +
-                    ", bookInfo=" + bookInfo +
-                    '}';
-        }
     }
 
     @Override

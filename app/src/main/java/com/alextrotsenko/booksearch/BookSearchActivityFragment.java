@@ -13,19 +13,16 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
-import com.alextrotsenko.booksearch.rest.MetaData;
 import com.alextrotsenko.booksearch.rest.dto.BooksInfo;
 import com.alextrotsenko.booksearch.rest.services.GoogleBookService;
 import com.alextrotsenko.booksearch.ui.BookAdapter;
+import com.alextrotsenko.booksearch.utils.NetworkHelper;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,13 +47,8 @@ public class BookSearchActivityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(MetaData.GOOGLE_BOOKS_BASE_URL)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        booksService = retrofit.create(GoogleBookService.class);
+        //todo replace with Dependency Injection
+        booksService = NetworkHelper.getRetrofit().create(GoogleBookService.class);
     }
 
     @Override

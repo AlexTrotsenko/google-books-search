@@ -19,6 +19,13 @@ public class BookInfo implements Serializable {
         return imageLinks.thumbnail;
     }
 
+    /**
+     * @return null as base info do not have description data.
+     */
+    public String getDescription() {
+        return null;
+    }
+
     public static class ImageLinks implements Serializable {
         private static final long serialVersionUID = -5555371262366112331L;
 

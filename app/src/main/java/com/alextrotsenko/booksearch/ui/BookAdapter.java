@@ -1,28 +1,22 @@
 package com.alextrotsenko.booksearch.ui;
 
-import android.content.Context;
-import android.content.Intent;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.alextrotsenko.booksearch.BookDetailsActivity;
 import com.alextrotsenko.booksearch.R;
 import com.alextrotsenko.booksearch.databinding.ListItemBookBinding;
-import com.alextrotsenko.booksearch.rest.dto.BooksInfo.EBookInfo;
+import com.alextrotsenko.booksearch.rest.dto.EBookInfo;
+import com.alextrotsenko.booksearch.rest.dto.ShortEBookInfo;
 import com.alextrotsenko.booksearch.ui.BookAdapter.EBookHolder;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.alextrotsenko.booksearch.viewmodel.BookViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Displays {@link EBookInfo} in the "list".
+ * Displays {@link ShortEBookInfo} in the "list".
  */
 public class BookAdapter extends RecyclerView.Adapter<EBookHolder> {
 
@@ -59,7 +53,7 @@ public class BookAdapter extends RecyclerView.Adapter<EBookHolder> {
      *
      * @param eBooks
      */
-    public void displayNewBooks(List<EBookInfo> eBooks) {
+    public void displayNewBooks(List<? extends EBookInfo> eBooks) {
         this.eBooks.clear();
 
         this.eBooks.addAll(eBooks);
@@ -96,40 +90,4 @@ public class BookAdapter extends RecyclerView.Adapter<EBookHolder> {
         }
     }
 
-    public static class BookViewModel extends BaseObservable {
-        private Context context;
-        private EBookInfo eBook;
-
-        public BookViewModel(Context context) {
-            this.context = context;
-        }
-
-        @Bindable
-        public String getTitle() {
-            return eBook.getBookInfo().getTitle();
-        }
-
-        @Bindable
-        public String getThumbnailLink() {
-            return eBook.getBookInfo().getThumbnailLink();
-        }
-
-        @BindingAdapter("bind:imageUrl")
-        public static void loadImage(ImageView view, String url) {
-            //todo use Dependency Injection
-            final ImageLoader imageLoader = ImageLoader.getInstance();
-
-            imageLoader.displayImage(url, view);
-        }
-
-        public void setEBook(EBookInfo eBook) {
-            this.eBook = eBook;
-            notifyChange();
-        }
-
-        public void onEBookClicked() {
-            Intent intent = BookDetailsActivity.newIntent(context, eBook);
-            context.startActivity(intent);
-        }
-    }
 }
