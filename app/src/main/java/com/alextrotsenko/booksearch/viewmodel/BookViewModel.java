@@ -7,6 +7,7 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import com.alextrotsenko.booksearch.App;
 import com.alextrotsenko.booksearch.BookDetailsActivity;
 import com.alextrotsenko.booksearch.rest.dto.EBookInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -34,8 +35,8 @@ public class BookViewModel extends BaseObservable {
 
     @BindingAdapter("bind:imageUrl")
     public static void loadImage(ImageView view, String url) {
-        //todo use Dependency Injection
-        final ImageLoader imageLoader = ImageLoader.getInstance();
+        //dagger 2 can't @Inject into static, but this method is static because of data-binding.
+        final ImageLoader imageLoader = App.getComponent().getImageLoader();
 
         imageLoader.displayImage(url, view);
     }

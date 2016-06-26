@@ -16,10 +16,11 @@ import android.widget.EditText;
 import com.alextrotsenko.booksearch.rest.dto.BooksInfo;
 import com.alextrotsenko.booksearch.rest.services.GoogleBookService;
 import com.alextrotsenko.booksearch.ui.BookAdapter;
-import com.alextrotsenko.booksearch.utils.NetworkHelper;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +38,8 @@ public class BookSearchActivityFragment extends Fragment {
     @BindView(R.id.books)
     RecyclerView books;
 
-    private GoogleBookService booksService;
+    @Inject
+    GoogleBookService booksService;
 
 
     public BookSearchActivityFragment() {
@@ -47,8 +49,7 @@ public class BookSearchActivityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //todo replace with Dependency Injection
-        booksService = NetworkHelper.getRetrofit().create(GoogleBookService.class);
+        App.getComponent().inject(this);
     }
 
     @Override

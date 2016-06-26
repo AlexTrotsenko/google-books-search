@@ -11,8 +11,9 @@ import com.alextrotsenko.booksearch.databinding.ActivityBookDetailsBinding;
 import com.alextrotsenko.booksearch.rest.dto.EBookInfo;
 import com.alextrotsenko.booksearch.rest.dto.ShortEBookInfo;
 import com.alextrotsenko.booksearch.rest.services.GoogleBookService;
-import com.alextrotsenko.booksearch.utils.NetworkHelper;
 import com.alextrotsenko.booksearch.viewmodel.DetailedBookViewModel;
+
+import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -21,9 +22,14 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_EBOOK = "com.alextrotsenko.booksearch.ebook";
 
+    @Inject
+    GoogleBookService googleBookService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.getComponent().inject(this);
 
         ActivityBookDetailsBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_book_details);
         //todo use subclass of BookViewModel: DetailedBookViewModel
@@ -31,7 +37,6 @@ public class BookDetailsActivity extends AppCompatActivity {
         viewModel.setEBook(getEBookInfo());
         binding.setViewModel(viewModel);
 
-        GoogleBookService googleBookService = NetworkHelper.getRetrofit().create(GoogleBookService.class);
         googleBookService.getBookDetails(getEBookInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,12 +44,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                         eBookResult -> viewModel.setEBook(eBookResult),
                         error -> Log.e("AlexT", "error at request to rest api:", error)
                 );
-
-
-        /**
-         * TODO: do request to https://www.googleapis.com/books/v1/volumes/{getEBookInfo().getId()}
-         * and display DetailedBookViewModel by setting it to BookViewModel
-         */
     }
 
     public static Intent newIntent(Context context, EBookInfo eBook) {
