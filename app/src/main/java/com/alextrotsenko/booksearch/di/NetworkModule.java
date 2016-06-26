@@ -31,7 +31,7 @@ public class NetworkModule {
         final DisplayImageOptions imageOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .resetViewBeforeLoading(true)
+                .resetViewBeforeLoading(false)
                 .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
                 .build();
 

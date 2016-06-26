@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.alextrotsenko.booksearch.App;
 import com.alextrotsenko.booksearch.BookDetailsActivity;
+import com.alextrotsenko.booksearch.R;
 import com.alextrotsenko.booksearch.rest.dto.EBookInfo;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -33,12 +34,20 @@ public class BookViewModel extends BaseObservable {
         return eBook.getBookInfo().getThumbnailLink();
     }
 
-    @BindingAdapter("bind:imageUrl")
-    public static void loadImage(ImageView view, String url) {
+    /**
+     * Displays url into the given view.
+     * But first of all it rest current view image to placeholder (as it might be re-used!).
+     *
+     * @see DetailedBookViewModel#loadImage(android.widget.ImageView, java.lang.String)
+     */
+    @BindingAdapter("imageUrlSafe")
+    public static void resetViewAndLoadImage(ImageView imageView, String url) {
         //dagger 2 can't @Inject into static, but this method is static because of data-binding.
         final ImageLoader imageLoader = App.getComponent().getImageLoader();
 
-        imageLoader.displayImage(url, view);
+        imageView.setImageResource(R.drawable.book_placeholder_black_48dp);
+
+        imageLoader.displayImage(url, imageView);
     }
 
     public void setEBook(EBookInfo eBook) {

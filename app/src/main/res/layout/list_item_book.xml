@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/book_thumbnail_width"
                 android:layout_height="@dimen/book_thumbnail_height"
                 android:contentDescription="@string/book_front_cover"
-                app:imageUrl="@{viewModel.thumbnailLink}"
+                app:imageUrlSafe="@{viewModel.thumbnailLink}"
             />
 
             <TextView
